@@ -8,16 +8,10 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import io.swagger.v3.oas.annotations.Hidden;
+@Hidden
 @RestControllerAdvice
 public class GlobalExceptionHandler {
-
-    @ExceptionHandler(RuntimeException.class)
-    public ResponseEntity<ErrorResponse> handleRuntime(RuntimeException ex) {
-        return ResponseEntity
-                .status(HttpStatus.NOT_FOUND)
-                .body(new ErrorResponse(ex.getMessage()));
-    }
-
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ErrorResponse> handleValidation(
             MethodArgumentNotValidException ex) {
@@ -30,4 +24,15 @@ public class GlobalExceptionHandler {
                 .status(HttpStatus.BAD_REQUEST)
                 .body(new ErrorResponse(msg));
     }
+@ExceptionHandler(RuntimeException.class)
+public ResponseEntity<ErrorResponse> handleRuntime(RuntimeException ex) {
+
+    HttpStatus status = ex.getMessage().contains("Too many")
+            ? HttpStatus.TOO_MANY_REQUESTS
+            : HttpStatus.NOT_FOUND;
+
+    return ResponseEntity
+            .status(status)
+            .body(new ErrorResponse(ex.getMessage()));
+}
 }

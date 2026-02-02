@@ -29,11 +29,16 @@ public class ShortUrl {
     private LocalDateTime expiresAt;
 
     private Boolean isActive = true;
+    @Column(nullable = false)
+    private Long clickCount = 0L;
 
     @PrePersist
     void onCreate() {
         this.createdAt = LocalDateTime.now();
+        if(this.clickCount == null){
+            this.clickCount= 0L;
+        }
     }
 
-    // getters & setters
+    
 }

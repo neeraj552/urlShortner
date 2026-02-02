@@ -8,5 +8,6 @@ import com.neeraj.urlshortener.entity.ShortUrl;
 
 public interface ShortUrlRepository extends JpaRepository<ShortUrl, Long> {
     Optional<ShortUrl> findByShortCodeAndIsActiveTrue(String shortCode);
+    Optional<ShortUrl> findByShortCode(String shortCode);
 
 }
