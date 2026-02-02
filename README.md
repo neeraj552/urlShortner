@@ -1,3 +1,8 @@
+# 🔗 URL Shortener Service (Spring Boot)
+
+A production-oriented URL Shortener backend built with Spring Boot, focusing on clean architecture, correctness, and real-world system design rather than just CRUD.
+
+---
 ## 🚀 Features Implemented
 
 - 🔐 Short URL generation using **Base62 encoding**
